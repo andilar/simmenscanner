@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+scanner/debug_*.html
+scanner/preview.html
+scanner/*.tmp
+scanner/*.sqlite-shm
+scanner/*.sqlite-wal
+

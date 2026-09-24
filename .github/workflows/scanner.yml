@@ -1,0 +1,66 @@
+name: Simson Scanner
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - ".github/workflows/scanner.yml"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: simson-scanner
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Tests
+        run: python -m unittest discover -v
+      - name: Scan, E-Mail und Dashboard
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+          MARKET_DASHBOARD_URL: ${{ vars.MARKET_DASHBOARD_URL }}
+        run: python -m scanner.scanner
+      - name: Aktualisierten Zustand committen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scanner/last_seen_ids.json scanner/all_time_favorites.json scanner/market_history.sqlite docs/index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: update market scan"
+          git push
+
+  deploy:
+    if: ${{ always() && (needs.scan.result == 'success' || needs.scan.result == 'skipped') }}
+    needs: scan
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
