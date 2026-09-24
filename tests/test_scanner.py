@@ -142,7 +142,7 @@ class HistoryTests(unittest.TestCase):
             self.assertEqual(len(data["price_changes"]), 1)
             render_dashboard(db, output)
             rendered = output.read_text()
-            self.assertIn("Simson-Markt im Blick", rendered)
+            self.assertIn("Simson Marktübersicht", rendered)
             self.assertIn("2026-09-24", rendered)
             self.assertNotIn("__DASHBOARD_DATA__", rendered)
 
