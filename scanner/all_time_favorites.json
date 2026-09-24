@@ -1,1 +1,92 @@
-[]
+[
+  {
+    "description": "Verkauft wird hier: Simson Schwalbe KR51/1 KR51 Baujahr 1974 Farbe: blau Inklusive KBA Papiere 60 km/h Motor startet Motor dreht, Getriebe schaltet Ein paar arbeiten müssen noch investiert werden. Moped sollte restauriert werden und Elektrik ge...",
+    "distance_km": 82,
+    "id": "2899569650",
+    "image_url": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/4e/4e6ce8e5-316e-48b8-8585-473d488c63ea?rule=$_59.AUTO",
+    "location": "39171 Osterweddingen",
+    "mileage": "",
+    "model": "KR51/1",
+    "model_year": "1974",
+    "online_since": "11.09.2026",
+    "positives": [
+      "KBA-Nachweis (laut Anbieter)",
+      "60 km/h dokumentiert (vor Kauf prüfen)"
+    ],
+    "postal_code": "39171",
+    "price": "1.790 €",
+    "risks": [],
+    "score": 229,
+    "score_breakdown": {
+      "condition": 0,
+      "distance": 19,
+      "documents": 90,
+      "legal_specification": 80,
+      "price": 40,
+      "risk": 0,
+      "technology": 0
+    },
+    "title": "Simson Schwalbe KR51/1 KR51 STARTET KBA Papiere 1974 Moped Mofa",
+    "url": "https://www.kleinanzeigen.de/s-anzeige/simson-schwalbe-kr51-1-kr51-startet-kba-papiere-1974-moped-mofa/2899569650-305-18136"
+  },
+  {
+    "description": "Verkauft wird hier: Simson Schwalbe KR51/1 KR51 Baujahr 1973 Farbe: blau Inklusive KBA Papiere 60 km/h Motor startet Motor dreht, Getriebe schaltet Ein paar arbeiten müssen noch investiert werden. Moped sollte restauriert werden und Elektrik ge...",
+    "distance_km": 82,
+    "id": "2899572388",
+    "image_url": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/7f/7faacfc6-0640-41bf-99b7-6b0e430c55dc?rule=$_59.AUTO",
+    "location": "39171 Osterweddingen",
+    "mileage": "",
+    "model": "KR51/1",
+    "model_year": "1973",
+    "online_since": "11.09.2026",
+    "positives": [
+      "KBA-Nachweis (laut Anbieter)",
+      "60 km/h dokumentiert (vor Kauf prüfen)"
+    ],
+    "postal_code": "39171",
+    "price": "1.790 €",
+    "risks": [],
+    "score": 229,
+    "score_breakdown": {
+      "condition": 0,
+      "distance": 19,
+      "documents": 90,
+      "legal_specification": 80,
+      "price": 40,
+      "risk": 0,
+      "technology": 0
+    },
+    "title": "Simson Schwalbe KR51/1 KR51 STARTET KBA Papiere 1973 Moped Mofa",
+    "url": "https://www.kleinanzeigen.de/s-anzeige/simson-schwalbe-kr51-1-kr51-startet-kba-papiere-1973-moped-mofa/2899572388-305-18136"
+  },
+  {
+    "description": "Ich biete meine schöne Simson Schwalbe KR 51/2 zum Verkauf an. Sie wurde optisch in Gelb neu gestaltet, war ursprünglich braun, und befindet sich sonst in einem originalen Zustand. - Modell: Simson Schwalbe KR 51 - Inklusive KBA-Papiere - Erneuer...",
+    "distance_km": 24,
+    "id": "3510075182",
+    "image_url": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/21/2143bbba-8c29-477d-b96b-54bd75c23f4c?rule=$_59.AUTO",
+    "location": "38268 Lengede",
+    "mileage": "",
+    "model": "KR51/2",
+    "model_year": "1986",
+    "online_since": "12.09.2026",
+    "positives": [
+      "KBA-Nachweis (laut Anbieter)",
+      "60 km/h dokumentiert (vor Kauf prüfen)"
+    ],
+    "postal_code": "38268",
+    "price": "2.590 €",
+    "risks": [],
+    "score": 222,
+    "score_breakdown": {
+      "condition": 0,
+      "distance": 20,
+      "documents": 90,
+      "legal_specification": 80,
+      "price": 32,
+      "risk": 0,
+      "technology": 0
+    },
+    "title": "Simson Schwalbe KR 51/2 gelb KBA Papiere läuft 60 km/h",
+    "url": "https://www.kleinanzeigen.de/s-anzeige/simson-schwalbe-kr-51-2-gelb-kba-papiere-laeuft-60-km-h/3510075182-305-2440"
+  }
+]
