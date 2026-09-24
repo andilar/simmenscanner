@@ -59,7 +59,7 @@ Mindestens folgende Werte müssen zentral und leicht änderbar sein:
 | `HIGHLIGHT_GROUPS` | Labels, Farben und zugehörige Keywords |
 | `SCORING_RULES` | Gewichte, Ausschlussbegriffe und modellabhängige Preisgrenzen |
 | `MARKET_DASHBOARD_URL` | Öffentliche URL des Markt-Dashboards |
-| `SCAN_SCHEDULE` | täglicher Ausführungszeitpunkt in UTC |
+| `SCAN_SCHEDULE` | täglicher Ausführungszeitpunkt mit Zeitzone |
 | Branding | Projektname, Titel, Modell-/Suchbezeichnung und Texte |
 
 Zugangsdaten dürfen nicht im Repository stehen. Sie werden ausschließlich über folgende Umgebungsvariablen beziehungsweise GitHub Secrets bereitgestellt:
@@ -309,7 +309,7 @@ Ein Workflow muss:
 
 Ein Push, der Dashboard oder Workflow betrifft, darf ein Pages-Deployment auslösen, aber keinen zweiten Scan. Gleichzeitige Workflow-Läufe dürfen sich nicht gegenseitig überschreiben.
 
-Referenzzeitplan: täglich `07:00 UTC`.
+Referenzzeitplan: täglich `07:00 Europe/Berlin`; die technische UTC-Planung muss Sommer- und Winterzeit berücksichtigen.
 
 ## 12. Nichtfunktionale Anforderungen
 
@@ -355,7 +355,7 @@ Die Abnahme ist erfolgreich, wenn alle Tests bestehen, ein lokaler Lauf ohne Sec
 - Referenzort: PLZ `38533`, Koordinaten ungefähr `52.42, 10.60`
 - E-Mail: Gmail SMTP
 - Dashboard: GitHub Pages
-- Ausführung: täglich um `07:00 UTC`
+- Ausführung: täglich um `07:00 Europe/Berlin` (Sommer-/Winterzeit beachten)
 - Branding des Dashboards: eigenständiges Simson-/Zweitakt-Marktdaten-Layout; keine Porsche-Bezeichnungen oder Porsche-spezifischen Kriterien
 - persistente Dateien:
   - `scanner/last_seen_ids.json`
@@ -400,4 +400,3 @@ Der Scanner trifft keine verbindliche Aussage zu Eigentum, Echtheit, Betriebserl
 ## 17. Lieferumfang für eine Neuimplementierung
 
 Eine vollständige Umsetzung umfasst Quellcode, HTML-Vorlage, initial leere State-Dateien beziehungsweise automatisch erzeugbaren State, Datenbankschema, Tests, GitHub-Actions-Workflow, Pages-Konfiguration, `.gitignore` und eine Setup-Anleitung. Die Anleitung beschreibt Gmail-App-Passwort, GitHub Secrets, Workflow-Schreibrechte, Pages-Aktivierung, lokalen Vorschau-Modus, Debug-Modus und die Anpassung von Suche, Standort, Scoring und Zeitplan.
-

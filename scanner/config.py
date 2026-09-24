@@ -17,7 +17,7 @@ POSTAL_PREFIX_COORDINATES = {
     "37": (51.53, 9.93), "38": (52.27, 10.52), "39": (52.13, 11.62),
     "06": (51.48, 11.97), "99": (50.98, 11.03),
 }
-SCAN_SCHEDULE = "0 7 * * *"
+SCAN_SCHEDULE = "07:00 Europe/Berlin"
 MAX_PAGES = 20
 REQUEST_DELAY_SECONDS = 1.0
 

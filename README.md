@@ -25,9 +25,8 @@ Unter **Settings → Secrets and variables → Actions** werden diese Repository
 
 Als Repository Variable wird `MARKET_DASHBOARD_URL`, beispielsweise `https://andilar.github.io/simmenscanner/`, angelegt. Das normale Gmail-Passwort gehört nicht in GitHub. Ein App-Passwort lässt sich im Google-Konto nach Aktivierung der Zwei-Faktor-Anmeldung erzeugen.
 
-Unter **Settings → Actions → General → Workflow permissions** ist **Read and write permissions** zu aktivieren. Unter **Settings → Pages** wird **GitHub Actions** als Quelle gewählt. Der Workflow läuft täglich um 07:00 UTC und kann manuell gestartet werden.
+Unter **Settings → Actions → General → Workflow permissions** ist **Read and write permissions** zu aktivieren. Unter **Settings → Pages** wird **GitHub Actions** als Quelle gewählt. Der Workflow läuft täglich um 07:00 Uhr deutscher Zeit (`Europe/Berlin`, inklusive Sommer-/Winterzeit) und kann manuell gestartet werden.
 
 ## Anpassungen
 
 Such-URLs, Standort, Preisbereiche, Ausschlussbegriffe und Branding liegen in `scanner/config.py`. Der Zeitplan steht zusätzlich im Workflow, weil GitHub den Cron-Ausdruck nicht aus Python-Konfiguration lesen kann. Das Dashboard-Layout liegt in `scanner/dashboard_template.html`.
-

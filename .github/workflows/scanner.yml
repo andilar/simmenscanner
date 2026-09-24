@@ -2,7 +2,10 @@ name: Simson Scanner
 
 on:
   schedule:
-    - cron: "0 7 * * *"
+    # GitHub-Cron kennt keine Zeitzonen. 05:00 UTC entspricht im Sommer,
+    # 06:00 UTC im Winter jeweils 07:00 Uhr in Europe/Berlin.
+    - cron: "0 5 * * *"
+    - cron: "0 6 * * *"
   workflow_dispatch:
   push:
     branches: [main]
@@ -23,14 +26,40 @@ jobs:
   scan:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.berlin-time.outputs.run }}
     steps:
+      - name: Berliner Ausführungszeit prüfen
+        id: berlin-time
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          python3 - <<'PY'
+          import datetime as dt
+          import os
+          from zoneinfo import ZoneInfo
+
+          should_run = os.environ["EVENT_NAME"] == "workflow_dispatch"
+          if os.environ["EVENT_NAME"] == "schedule":
+              berlin_now = dt.datetime.now(ZoneInfo("Europe/Berlin"))
+              utc_hour_for_berlin_7 = (7 - int(berlin_now.utcoffset().total_seconds() / 3600)) % 24
+              scheduled_hour = int(os.environ["EVENT_SCHEDULE"].split()[1])
+              should_run = scheduled_hour == utc_hour_for_berlin_7
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              print(f"run={'true' if should_run else 'false'}", file=output)
+          PY
       - uses: actions/checkout@v4
+        if: steps.berlin-time.outputs.run == 'true'
       - uses: actions/setup-python@v5
+        if: steps.berlin-time.outputs.run == 'true'
         with:
           python-version: "3.11"
       - name: Tests
+        if: steps.berlin-time.outputs.run == 'true'
         run: python -m unittest discover -v
       - name: Scan, E-Mail und Dashboard
+        if: steps.berlin-time.outputs.run == 'true'
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
@@ -38,6 +67,7 @@ jobs:
           MARKET_DASHBOARD_URL: ${{ vars.MARKET_DASHBOARD_URL }}
         run: python -m scanner.scanner
       - name: Aktualisierten Zustand committen
+        if: steps.berlin-time.outputs.run == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -47,7 +77,7 @@ jobs:
           git push
 
   deploy:
-    if: ${{ always() && (needs.scan.result == 'success' || needs.scan.result == 'skipped') }}
+    if: ${{ always() && (github.event_name == 'push' || (needs.scan.result == 'success' && needs.scan.outputs.should_run == 'true')) }}
     needs: scan
     runs-on: ubuntu-latest
     environment:
@@ -63,4 +93,3 @@ jobs:
           path: docs
       - id: deployment
         uses: actions/deploy-pages@v4
-
