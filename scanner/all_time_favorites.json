@@ -1,5 +1,36 @@
 [
   {
+    "description": "Simson S51 Neuaufbau mit 60 Kmh KBA Papiere. Motor Revision gemacht und Vape Zündung verbaut . Das Moped wurde komplett zerlegt und wieder neu aufgebaut . VB heißt im geringen Rahmen und wird nur vor Ort bei Besichtigung besprochen. ❗️Privatv...",
+    "distance_km": 77,
+    "id": "3528586757",
+    "image_url": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/54/54e1d5eb-4155-47dd-8b1a-ddd89dd1d884?rule=$_59.AUTO",
+    "location": "39317 Elbe-Parey",
+    "mileage": "",
+    "model": "S51",
+    "model_year": "",
+    "online_since": "Heute",
+    "positives": [
+      "KBA-Nachweis (laut Anbieter)",
+      "60 km/h dokumentiert (vor Kauf prüfen)",
+      "VAPE-Zündung"
+    ],
+    "postal_code": "39317",
+    "price": "3.500 € VB",
+    "risks": [],
+    "score": 254,
+    "score_breakdown": {
+      "condition": 0,
+      "distance": 19,
+      "documents": 90,
+      "legal_specification": 80,
+      "price": 20,
+      "risk": 0,
+      "technology": 45
+    },
+    "title": "Simson S51 mit Papiere",
+    "url": "https://www.kleinanzeigen.de/s-anzeige/simson-s51-mit-papiere/3528586757-305-17446"
+  },
+  {
     "description": "Simson S51 – 4-Gang mit VAPE – Neuaufbau – Top Zustand inklusive KBA Papiere. Zum Verkauf steht eine absolut perfekte Simson, die von Grund auf neu aufgebaut wurde. Hier wurde nicht gespart – Qualität stand an erster Stelle! ✔️ Komplett neu überho...",
     "distance_km": 56,
     "id": "3527623560",
@@ -8,7 +39,7 @@
     "mileage": "",
     "model": "S51",
     "model_year": "",
-    "online_since": "Gestern",
+    "online_since": "30.09.2026",
     "positives": [
       "KBA-Nachweis (laut Anbieter)",
       "60 km/h dokumentiert (vor Kauf prüfen)",
@@ -59,35 +90,5 @@
     },
     "title": "Simson Schwalbe KR51/1 KR51 STARTET KBA Papiere 1974 Moped Mofa",
     "url": "https://www.kleinanzeigen.de/s-anzeige/simson-schwalbe-kr51-1-kr51-startet-kba-papiere-1974-moped-mofa/2899569650-305-18136"
-  },
-  {
-    "description": "Verkauft wird hier: Simson Schwalbe KR51/1 KR51 Baujahr 1973 Farbe: blau Inklusive KBA Papiere 60 km/h Motor startet Motor dreht, Getriebe schaltet Ein paar arbeiten müssen noch investiert werden. Moped sollte restauriert werden und Elektrik ge...",
-    "distance_km": 82,
-    "id": "2899572388",
-    "image_url": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/7f/7faacfc6-0640-41bf-99b7-6b0e430c55dc?rule=$_59.AUTO",
-    "location": "39171 Osterweddingen",
-    "mileage": "",
-    "model": "KR51/1",
-    "model_year": "1973",
-    "online_since": "11.09.2026",
-    "positives": [
-      "KBA-Nachweis (laut Anbieter)",
-      "60 km/h dokumentiert (vor Kauf prüfen)"
-    ],
-    "postal_code": "39171",
-    "price": "1.790 €",
-    "risks": [],
-    "score": 229,
-    "score_breakdown": {
-      "condition": 0,
-      "distance": 19,
-      "documents": 90,
-      "legal_specification": 80,
-      "price": 40,
-      "risk": 0,
-      "technology": 0
-    },
-    "title": "Simson Schwalbe KR51/1 KR51 STARTET KBA Papiere 1973 Moped Mofa",
-    "url": "https://www.kleinanzeigen.de/s-anzeige/simson-schwalbe-kr51-1-kr51-startet-kba-papiere-1973-moped-mofa/2899572388-305-18136"
   }
 ]
