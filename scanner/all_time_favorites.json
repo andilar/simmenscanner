@@ -1,5 +1,36 @@
 [
   {
+    "description": "Simson S51 4 Gang Originale DDR Papiere vorhanden. 60 Km/h . Springt Kalt und warum gut an. Läuft fährt und Bremst. Licht sollte mal überprüft werden (Glühbirne wechseln). Tankset und Seitendeckel wurden überarbeitet und in einem schönen blau schw...",
+    "distance_km": 81,
+    "id": "3542241722",
+    "image_url": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/8c/8c8a320e-98af-481f-ace4-4648e48b041c?rule=$_59.AUTO",
+    "location": "37619 Bodenwerder",
+    "mileage": "",
+    "model": "S51",
+    "model_year": "1986",
+    "online_since": "Heute",
+    "positives": [
+      "DDR-Originalpapiere (laut Anbieter)",
+      "60 km/h dokumentiert (vor Kauf prüfen)",
+      "Originaler 50-cm³-Zustand (laut Anbieter)"
+    ],
+    "postal_code": "37619",
+    "price": "3.250 €",
+    "risks": [],
+    "score": 292,
+    "score_breakdown": {
+      "condition": 0,
+      "distance": 19,
+      "documents": 100,
+      "legal_specification": 150,
+      "price": 23,
+      "risk": 0,
+      "technology": 0
+    },
+    "title": "Simson S51 4 Gang DDR Papiere!! 50ccm 60 Km/h",
+    "url": "https://www.kleinanzeigen.de/s-anzeige/simson-s51-4-gang-ddr-papiere-50ccm-60-km-h/3542241722-305-19759"
+  },
+  {
     "description": "Simson S51 Neuaufbau mit 60 Kmh KBA Papiere. Motor Regeneriert und Vape Zündung verbaut . Das Moped wurde komplett zerlegt und wieder neu aufgebaut . VB heißt im geringen Rahmen und wird nur vor Ort bei Besichtigung besprochen. ❗️Privatverka...",
     "distance_km": 77,
     "id": "3536303752",
@@ -61,36 +92,5 @@
     },
     "title": "Simson Schwalbe KR51/1, 3Gang, 12V Vape, KBA Papiere",
     "url": "https://www.kleinanzeigen.de/s-anzeige/simson-schwalbe-kr51-1-3gang-12v-vape-kba-papiere/3534783688-305-3170"
-  },
-  {
-    "description": "Simson S51 Neuaufbau mit 60 Kmh KBA Papiere. Motor Revision gemacht und Vape Zündung verbaut . Das Moped wurde komplett zerlegt und wieder neu aufgebaut . VB heißt im geringen Rahmen und wird nur vor Ort bei Besichtigung besprochen. ❗️Privatv...",
-    "distance_km": 77,
-    "id": "3528586757",
-    "image_url": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/54/54e1d5eb-4155-47dd-8b1a-ddd89dd1d884?rule=$_59.AUTO",
-    "location": "39317 Elbe-Parey",
-    "mileage": "",
-    "model": "S51",
-    "model_year": "",
-    "online_since": "02.10.2026",
-    "positives": [
-      "KBA-Nachweis (laut Anbieter)",
-      "60 km/h dokumentiert (vor Kauf prüfen)",
-      "VAPE-Zündung"
-    ],
-    "postal_code": "39317",
-    "price": "3.500 € VB",
-    "risks": [],
-    "score": 254,
-    "score_breakdown": {
-      "condition": 0,
-      "distance": 19,
-      "documents": 90,
-      "legal_specification": 80,
-      "price": 20,
-      "risk": 0,
-      "technology": 45
-    },
-    "title": "Simson S51 mit Papiere",
-    "url": "https://www.kleinanzeigen.de/s-anzeige/simson-s51-mit-papiere/3528586757-305-17446"
   }
 ]
