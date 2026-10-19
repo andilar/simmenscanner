@@ -189,6 +189,10 @@ class HistoryTests(unittest.TestCase):
             rendered = output.read_text()
             self.assertIn("Simson Marktübersicht", rendered)
             self.assertIn("2026-09-24", rendered)
+            self.assertIn('href="#overview"', rendered)
+            self.assertIn('href="#market"', rendered)
+            self.assertIn('href="#offers"', rendered)
+            self.assertIn('href="#info"', rendered)
             self.assertNotIn("__DASHBOARD_DATA__", rendered)
 
 
