@@ -14,6 +14,9 @@ if TYPE_CHECKING:
     from .scanner import Listing
 
 
+INACTIVE_RETENTION_DAYS = 21
+
+
 SCHEMA = """
 PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS scans (
@@ -35,7 +38,9 @@ CREATE TABLE IF NOT EXISTS listings (
     title TEXT NOT NULL,
     url TEXT NOT NULL,
     first_seen_at TEXT NOT NULL,
-    last_seen_at TEXT NOT NULL
+    last_seen_at TEXT NOT NULL,
+    active INTEGER NOT NULL DEFAULT 1,
+    inactive_since TEXT
 );
 CREATE TABLE IF NOT EXISTS observations (
     scan_id INTEGER NOT NULL REFERENCES scans(id) ON DELETE CASCADE,
@@ -66,11 +71,49 @@ def connect(path: Path) -> sqlite3.Connection:
     connection = sqlite3.connect(path)
     connection.row_factory = sqlite3.Row
     connection.executescript(SCHEMA)
+    columns = {row["name"] for row in connection.execute("PRAGMA table_info(listings)")}
+    if "active" not in columns:
+        connection.execute("ALTER TABLE listings ADD COLUMN active INTEGER NOT NULL DEFAULT 1")
+    if "inactive_since" not in columns:
+        connection.execute("ALTER TABLE listings ADD COLUMN inactive_since TEXT")
     return connection
+
+
+def expired_listing_ids(
+    path: Path,
+    current_ids: set[str],
+    as_of: dt.datetime | None = None,
+) -> set[str]:
+    """Return listings whose inactivity grace period has elapsed.
+
+    This is intentionally read-only so an email failure cannot change persistent
+    state. Databases from before the lifecycle migration have no inactive dates
+    yet and therefore expire nothing until a successful scan marks them.
+    """
+    if not path.exists():
+        return set()
+    timestamp = as_of or dt.datetime.now(dt.timezone.utc)
+    cutoff = (timestamp - dt.timedelta(days=INACTIVE_RETENTION_DAYS)).isoformat(timespec="seconds")
+    with closing(sqlite3.connect(path)) as db:
+        columns = {row[1] for row in db.execute("PRAGMA table_info(listings)")}
+        if "active" not in columns or "inactive_since" not in columns:
+            return set()
+        expired = {
+            row[0]
+            for row in db.execute(
+                "SELECT id FROM listings WHERE active=0 AND inactive_since IS NOT NULL AND inactive_since<=?",
+                (cutoff,),
+            )
+        }
+    return expired - current_ids
 
 
 def record_scan(path: Path, listings: list["Listing"], scanned_at: str | None = None) -> int:
     timestamp = scanned_at or dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+    scan_time = dt.datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+    if scan_time.tzinfo is None:
+        scan_time = scan_time.replace(tzinfo=dt.timezone.utc)
+    cutoff = (scan_time - dt.timedelta(days=INACTIVE_RETENTION_DAYS)).isoformat(timespec="seconds")
     current = {item.id: item for item in listings}
     prices = [_price(item.price) for item in listings]
     numeric_prices = [value for value in prices if value is not None]
@@ -102,10 +145,16 @@ def record_scan(path: Path, listings: list["Listing"], scanned_at: str | None = 
             ),
         )
         scan_id = cursor.lastrowid
+        db.execute(
+            "UPDATE listings SET active=0,inactive_since=COALESCE(inactive_since,?) WHERE active=1",
+            (timestamp,),
+        )
         for item in listings:
             db.execute(
-                """INSERT INTO listings(id,title,url,first_seen_at,last_seen_at) VALUES(?,?,?,?,?)
-                   ON CONFLICT(id) DO UPDATE SET title=excluded.title,url=excluded.url,last_seen_at=excluded.last_seen_at""",
+                """INSERT INTO listings(id,title,url,first_seen_at,last_seen_at,active,inactive_since)
+                   VALUES(?,?,?,?,?,1,NULL)
+                   ON CONFLICT(id) DO UPDATE SET title=excluded.title,url=excluded.url,
+                   last_seen_at=excluded.last_seen_at,active=1,inactive_since=NULL""",
                 (item.id, item.title, item.url, timestamp, timestamp),
             )
             db.execute(
@@ -117,6 +166,10 @@ def record_scan(path: Path, listings: list["Listing"], scanned_at: str | None = 
                     json.dumps(item.risks, ensure_ascii=False),
                 ),
             )
+        db.execute(
+            "DELETE FROM listings WHERE active=0 AND inactive_since IS NOT NULL AND inactive_since<=?",
+            (cutoff,),
+        )
         return int(scan_id)
 
 

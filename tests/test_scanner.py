@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import dataclasses
+import datetime as dt
 import json
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from scanner.market_history import dashboard_data, record_scan, render_dashboard
+from scanner.market_history import dashboard_data, expired_listing_ids, record_scan, render_dashboard
 from scanner.scanner import (
     Listing, approximate_distance, atomic_json, build_email, detect_model, fetch_all, merge_favorites,
     parse_search_page, score_listing, validate_listings,
@@ -102,6 +103,11 @@ class OutputAndStateTests(unittest.TestCase):
         favorites = merge_favorites([old.as_dict()], [listing("new", description="fahrbereit")])
         self.assertEqual(favorites[0].id, "old")
 
+    def test_expired_favorite_is_removed(self):
+        old = listing("old", description="Originale DDR Papiere, 50 ccm original, 12V VAPE, vollständig und fahrbereit")
+        favorites = merge_favorites([old.as_dict()], [listing("new")], {"old"})
+        self.assertEqual([item.id for item in favorites], ["new"])
+
     def test_seen_ids_are_sorted(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "seen.json"
@@ -110,6 +116,45 @@ class OutputAndStateTests(unittest.TestCase):
 
 
 class HistoryTests(unittest.TestCase):
+    def test_inactive_listings_are_deleted_after_three_weeks(self):
+        with tempfile.TemporaryDirectory() as directory:
+            db_path = Path(directory) / "history.sqlite"
+            record_scan(db_path, [listing("old")], "2026-09-01T07:00:00+00:00")
+            record_scan(db_path, [], "2026-09-02T07:00:00+00:00")
+
+            import sqlite3
+            with sqlite3.connect(db_path) as db:
+                state = db.execute(
+                    "SELECT active,inactive_since FROM listings WHERE id='old'"
+                ).fetchone()
+            self.assertEqual(state, (0, "2026-09-02T07:00:00+00:00"))
+            self.assertEqual(
+                expired_listing_ids(
+                    db_path, set(), dt.datetime(2026, 9, 23, 7, tzinfo=dt.timezone.utc)
+                ),
+                {"old"},
+            )
+
+            record_scan(db_path, [], "2026-09-23T07:00:00+00:00")
+            with sqlite3.connect(db_path) as db:
+                self.assertEqual(db.execute("SELECT COUNT(*) FROM listings").fetchone()[0], 0)
+                self.assertEqual(db.execute("SELECT COUNT(*) FROM observations").fetchone()[0], 0)
+                self.assertEqual(db.execute("SELECT COUNT(*) FROM scans").fetchone()[0], 3)
+
+    def test_reappearing_listing_is_reactivated(self):
+        with tempfile.TemporaryDirectory() as directory:
+            db_path = Path(directory) / "history.sqlite"
+            record_scan(db_path, [listing("returning")], "2026-09-01T07:00:00+00:00")
+            record_scan(db_path, [], "2026-09-02T07:00:00+00:00")
+            record_scan(db_path, [listing("returning")], "2026-09-10T07:00:00+00:00")
+
+            import sqlite3
+            with sqlite3.connect(db_path) as db:
+                state = db.execute(
+                    "SELECT active,inactive_since FROM listings WHERE id='returning'"
+                ).fetchone()
+            self.assertEqual(state, (1, None))
+
     def test_empty_dashboard_has_clear_state(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory); output = root / "index.html"

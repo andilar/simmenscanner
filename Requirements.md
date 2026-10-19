@@ -205,7 +205,8 @@ Fehlende Preise oder Postleitzahlen dürfen den Lauf nicht verhindern; der jewei
 - Die drei bestbewerteten jemals beobachteten Angebote werden in `scanner/all_time_favorites.json` gespeichert.
 - Vorherige Favoriten werden mit allen aktuellen Angeboten anhand der ID zusammengeführt und neu bewertet.
 - Aktuelle Daten ersetzen ältere Daten derselben Anzeige.
-- Ein nicht mehr aktiver, aber weiterhin hoch bewerteter Favorit bleibt erhalten.
+- Ein nicht mehr aktiver, aber weiterhin hoch bewerteter Favorit bleibt während der 21-tägigen Aufbewahrungsfrist erhalten.
+- Nach Ablauf der Aufbewahrungsfrist wird er aus den Favoriten entfernt.
 
 ### FR-10: Sicheres Aktualisierungsverhalten
 
@@ -251,6 +252,8 @@ Die Datenbank `scanner/market_history.sqlite` enthält mindestens:
 - `observations`: je Scan und Anzeige erkanntes Simson-Modell, Preis, Ort, PLZ, Kilometerstand, Baujahr, Score und erkannte Kriterien/Risiken
 
 Die Kombination aus Scan und Angebots-ID muss eindeutig sein. Beziehungen sind per Foreign Key abzusichern; Beobachtungen müssen nach Angebots-ID und Scan effizient abfragbar sein.
+
+Wird ein Angebot in einem erfolgreichen Scan nicht mehr gefunden, wird es mit dem Zeitpunkt der ersten Abwesenheit als inaktiv markiert. Bei erneutem Auftauchen innerhalb von 21 Tagen wird es reaktiviert. Nach 21 Tagen ununterbrochener Inaktivität werden Stammdaten und zugehörige Beobachtungen gelöscht; aggregierte Scan-Datensätze bleiben erhalten.
 
 ### FR-15: Scan-Kennzahlen
 

@@ -15,6 +15,8 @@ python -m scanner.scanner --max-pages 1
 
 Ohne SMTP-Zugangsdaten entsteht ausschließlich `scanner/preview.html`. Seen-State, Favoriten, Datenbank und Dashboard bleiben dabei unverändert. `DEBUG=1` speichert zusätzlich die abgerufenen Ergebnisseiten unter `scanner/debug_*.html`.
 
+Nicht mehr gefundene Angebote werden nach einem erfolgreichen Scan zunächst als inaktiv markiert. Tauchen sie innerhalb von 21 Tagen wieder auf, werden sie reaktiviert. Danach werden ihre Stammdaten und Detailbeobachtungen gelöscht; aggregierte Scan-Kennzahlen bleiben erhalten.
+
 ## GitHub konfigurieren
 
 Unter **Settings → Secrets and variables → Actions** werden diese Repository Secrets benötigt:

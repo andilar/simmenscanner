@@ -307,8 +307,17 @@ def atomic_json(path: Path, value) -> None:
     temporary.replace(path)
 
 
-def merge_favorites(previous: list[dict], current: list[Listing]) -> list[Listing]:
-    merged = {item.id: score_listing(item) for item in (Listing.from_dict(raw) for raw in previous)}
+def merge_favorites(
+    previous: list[dict],
+    current: list[Listing],
+    excluded_ids: set[str] | None = None,
+) -> list[Listing]:
+    excluded_ids = excluded_ids or set()
+    merged = {
+        item.id: score_listing(item)
+        for item in (Listing.from_dict(raw) for raw in previous)
+        if item.id not in excluded_ids
+    }
     merged.update({item.id: item for item in current})
     return sorted(merged.values(), key=lambda item: (-item.score, item.id))[:3]
 
@@ -369,9 +378,12 @@ def run() -> int:
     validate_listings(listings)
     seen_path = SCANNER_DIR / "last_seen_ids.json"
     favorites_path = SCANNER_DIR / "all_time_favorites.json"
+    history_path = SCANNER_DIR / "market_history.sqlite"
     seen = set(load_json(seen_path, []))
     new = [item for item in listings if item.id not in seen]
-    favorites = merge_favorites(load_json(favorites_path, []), listings)
+    from scanner.market_history import expired_listing_ids, record_scan, render_dashboard
+    expired_ids = expired_listing_ids(history_path, {item.id for item in listings})
+    favorites = merge_favorites(load_json(favorites_path, []), listings, expired_ids)
     LOG.info("%d Angebote erkannt, %d neu", len(listings), len(new))
     document = build_email(new, favorites, len(listings))
     if not os.getenv("GMAIL_USER") or not os.getenv("GMAIL_APP_PASSWORD"):
@@ -379,11 +391,10 @@ def run() -> int:
         LOG.info("Keine SMTP-Secrets: nur scanner/preview.html erzeugt; State unverändert")
         return 0
     send_email(document, len(new))
+    record_scan(history_path, listings)
     atomic_json(seen_path, sorted(seen | {item.id for item in listings}))
     atomic_json(favorites_path, [item.as_dict() for item in favorites])
-    from scanner.market_history import record_scan, render_dashboard
-    record_scan(SCANNER_DIR / "market_history.sqlite", listings)
-    render_dashboard(SCANNER_DIR / "market_history.sqlite", ROOT / "docs" / "index.html")
+    render_dashboard(history_path, ROOT / "docs" / "index.html")
     LOG.info("E-Mail versendet und Zustand aktualisiert")
     return 0
 
