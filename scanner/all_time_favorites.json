@@ -1,36 +1,5 @@
 [
   {
-    "description": "Wunderschöner Zustand!! Alles original außer das neue Tankset!! Legal 60 Km/h!! DDR Papiere vorhanden. Keine Schraube wurde ersetzt oder ähnliches! Original 6300 Km gelaufen. Sehr schöner Zustand. Maschine stand 25 Jahre in einer Privatsammlung u...",
-    "distance_km": 81,
-    "id": "3554315156",
-    "image_url": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/63/63c1cd83-24b8-4019-9743-a4e8fc7a20a0?rule=$_59.AUTO",
-    "location": "37619 Bodenwerder",
-    "mileage": "",
-    "model": "S51",
-    "model_year": "1987",
-    "online_since": "27.10.2026",
-    "positives": [
-      "DDR-Originalpapiere (laut Anbieter)",
-      "60 km/h dokumentiert (vor Kauf prüfen)",
-      "Originaler 50-cm³-Zustand (laut Anbieter)"
-    ],
-    "postal_code": "37619",
-    "price": "3.250 €",
-    "risks": [],
-    "score": 292,
-    "score_breakdown": {
-      "condition": 0,
-      "distance": 19,
-      "documents": 100,
-      "legal_specification": 150,
-      "price": 23,
-      "risk": 0,
-      "technology": 0
-    },
-    "title": "TOP ZUSTAND!! Simson S51 B + DDR Papiere!! 60 Km/h 50ccm",
-    "url": "https://www.kleinanzeigen.de/s-anzeige/top-zustand-simson-s51-b-ddr-papiere-60-km-h-50ccm/3554315156-305-19759"
-  },
-  {
     "description": "Verkauft wird hier: Simson Schwalbe KR51/1 KR51 Baujahr 1974 Farbe: blau Inklusive KBA Papiere 60 km/h Motor startet Motor dreht, Getriebe schaltet Ein paar arbeiten müssen noch investiert werden. Moped sollte restauriert werden und Elektrik ge...",
     "distance_km": 82,
     "id": "2899569650",
@@ -89,5 +58,35 @@
     },
     "title": "Simson Schwalbe KR51/1 KR51 STARTET KBA Papiere 1973 Moped Mofa",
     "url": "https://www.kleinanzeigen.de/s-anzeige/simson-schwalbe-kr51-1-kr51-startet-kba-papiere-1973-moped-mofa/2899572388-305-18136"
+  },
+  {
+    "description": "Festpreis!!!!!! Ich möchte gern meine Simson verkaufen, bin dieses Jahr vielleicht 3 mal gefahren und zum rumstehen ist sie zu Schade. Verbaut ist ein Durchzugstarker 4 Gang Motor der locker seine 60kmh schafft. Des weiteren ist eine DDR Elektro...",
+    "distance_km": 77,
+    "id": "3569827079",
+    "image_url": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/60/60ba74f5-81a1-4e0f-ab84-8e9ed28cb4e5?rule=$_59.AUTO",
+    "location": "39218 Schönebeck",
+    "mileage": "",
+    "model": "S51",
+    "model_year": "",
+    "online_since": "13.11.2026",
+    "positives": [
+      "KBA-Nachweis (laut Anbieter)",
+      "60 km/h dokumentiert (vor Kauf prüfen)"
+    ],
+    "postal_code": "39218",
+    "price": "2.999 €",
+    "risks": [],
+    "score": 216,
+    "score_breakdown": {
+      "condition": 0,
+      "distance": 19,
+      "documents": 90,
+      "legal_specification": 80,
+      "price": 27,
+      "risk": 0,
+      "technology": 0
+    },
+    "title": "Simson S51 4 Gang mit Kba Papiere",
+    "url": "https://www.kleinanzeigen.de/s-anzeige/simson-s51-4-gang-mit-kba-papiere/3569827079-305-2180"
   }
 ]
